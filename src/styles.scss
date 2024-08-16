@@ -3,3 +3,14 @@ h1 {
   color: red;
   font-size: medium;
 }
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: grey;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
