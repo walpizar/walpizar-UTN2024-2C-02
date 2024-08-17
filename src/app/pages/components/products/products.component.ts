@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ProductsService } from '../../../services/products.service';
 import { Productos } from '../../../models/Producto';
 import {MatButtonModule} from '@angular/material/button';
@@ -6,6 +6,18 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTableModule} from '@angular/material/table';
 import { CommonModule } from '@angular/common';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
+import { ProductosCrudComponent } from './productos-crud/productos-crud.component';
+
+
 @Component({
   selector: 'app-products',
   standalone: true,
@@ -16,6 +28,8 @@ import { CommonModule } from '@angular/common';
 export class ProductsComponent {
   displayedColumns: string[] = ['id', 'nombre', 'precio', 'categoria','acciones'];
   lista:Productos[]=[];
+  readonly dialog = inject(MatDialog);
+
 
   constructor(private productosSrv:ProductsService){}
 
@@ -42,7 +56,18 @@ export class ProductsComponent {
     alert('aqui en el detalle del producto...');
   }
 
-  crear(){
+  openDialog(accion?:number, producto?:Productos){
+
+    const dialogRef = this.dialog.open(ProductosCrudComponent,
+    {
+      height:'500px',
+      width:'500px',
+      data: {producto, accion},
+    });
+
+    dialogRef.afterClosed().subscribe(()=>{
+      this.cargarDatos();
+    })
 
   }
   modificar(producto:Productos){

@@ -17,10 +17,14 @@ export class ProductsService {
   getOne(){
 
   }
-  create(){
+  create(producto:Productos):Observable<any>{
 
+    return this.http.post<any>("http://localhost:3000/productos",producto);
   }
-  update(){
+  update(producto:Productos):Observable<any>{
+
+    console.log(producto);
+    return this.http.put<any>(`http://localhost:3000/productos/${producto.id}`,producto);
 
   }
   delete(id:number):Observable<any>{
